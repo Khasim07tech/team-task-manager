@@ -1,4 +1,4 @@
-# Team Task Manager
+# TeamFlow Workspace
 
 A full-stack web app for creating projects, assigning tasks, tracking status, and managing team access with Admin/Member roles.
 

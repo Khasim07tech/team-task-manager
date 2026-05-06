@@ -84,8 +84,8 @@ function renderAuth(mode = "login") {
     <section class="auth">
       <form class="auth-panel" id="authForm">
         <div>
-          <h1>Team Task Manager</h1>
-          <p>${mode === "login" ? "Log in to manage projects and delivery work." : "Create the first account as Admin, then invite members."}</p>
+          <h1>TeamFlow Workspace</h1>
+          <p>${mode === "login" ? "Log in to coordinate projects, owners, and deadlines." : "Create the first account as Admin, then invite members."}</p>
         </div>
         ${state.message}
         ${mode === "signup" ? '<label>Name<input name="name" autocomplete="name" required minlength="2" /></label>' : ""}
@@ -123,7 +123,7 @@ function renderApp() {
     <section class="shell">
       <aside class="sidebar">
         <div class="brand">
-          <h1>Team Task Manager</h1>
+          <h1>TeamFlow Workspace</h1>
           <p>${escapeHtml(state.user.name)} · ${state.user.role}</p>
         </div>
         <nav class="nav">
