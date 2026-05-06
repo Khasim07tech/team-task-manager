@@ -251,17 +251,20 @@ function projectCard(project) {
 }
 
 function renderTasks() {
+  const selectedProject = state.projects[0] || null;
+  const canCreateTask = Boolean(selectedProject);
   return `
     <div class="grid two">
       <form class="panel form" id="taskForm">
         <h3>New task</h3>
-        <label>Project<select name="projectId" required>${projectOptions()}</select></label>
+        ${canCreateTask ? "" : '<div class="message error">Create a project before adding tasks.</div>'}
+        <label>Project<select name="projectId" id="projectSelect" required ${canCreateTask ? "" : "disabled"}>${projectOptions()}</select></label>
         <label>Title<input name="title" required minlength="3" /></label>
         <label>Description<textarea name="description"></textarea></label>
-        <label>Assignee<select name="assigneeId" required>${userOptions()}</select></label>
+        <label>Assignee<select name="assigneeId" id="assigneeSelect" required ${canCreateTask ? "" : "disabled"}>${assigneeOptions(selectedProject?.id)}</select></label>
         <label>Status<select name="status">${statusOptions()}</select></label>
         <label>Due date<input name="dueDate" type="date" /></label>
-        <button>Create task</button>
+        <button ${canCreateTask ? "" : "disabled"}>Create task</button>
       </form>
       <section class="stack">
         ${state.tasks.length ? state.tasks.map(taskCard).join("") : '<div class="empty">No tasks yet.</div>'}
@@ -324,6 +327,15 @@ function userOptions() {
   return state.users.map((user) => `<option value="${user.id}" ${user.id === state.user.id ? "selected" : ""}>${escapeHtml(user.name)} (${user.role})</option>`).join("");
 }
 
+function assigneeOptions(projectId) {
+  const project = state.projects.find((candidate) => candidate.id === projectId);
+  const memberIds = project ? project.memberIds : [];
+  return state.users
+    .filter((user) => memberIds.includes(user.id))
+    .map((user) => `<option value="${user.id}" ${user.id === state.user.id ? "selected" : ""}>${escapeHtml(user.name)} (${user.role})</option>`)
+    .join("");
+}
+
 function projectOptions() {
   return state.projects.map((project) => `<option value="${project.id}">${escapeHtml(project.name)}</option>`).join("");
 }
@@ -348,6 +360,13 @@ function bindViewHandlers() {
   }
   const taskForm = document.querySelector("#taskForm");
   if (taskForm) {
+    const projectSelect = document.querySelector("#projectSelect");
+    const assigneeSelect = document.querySelector("#assigneeSelect");
+    if (projectSelect && assigneeSelect) {
+      projectSelect.onchange = () => {
+        assigneeSelect.innerHTML = assigneeOptions(projectSelect.value);
+      };
+    }
     taskForm.onsubmit = async (event) => {
       event.preventDefault();
       await mutate("/api/tasks", "POST", formData(event.target));
