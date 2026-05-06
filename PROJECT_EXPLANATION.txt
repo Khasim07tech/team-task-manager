@@ -7,6 +7,13 @@ Team Task Manager is a full-stack web application where users can create project
 It includes authentication, project management, task management, role-based access control, validations, relationships, GitHub version control, and Railway deployment configuration.
 
 
+Author
+------
+Name: Pinjari Khasim
+Program: B.Tech AIML Student
+Institute: Sreenidhi Institute of Science and Technology
+
+
 What I Built
 ------------
 I built a full-stack Team Task Manager using Node.js for the backend and HTML, CSS, and JavaScript for the frontend.

@@ -9,6 +9,13 @@ Live URL: Add your Railway deployment URL here
 GitHub Repository: https://github.com/Khasim07tech/team-task-manager
 
 
+AUTHOR
+
+Name: Pinjari Khasim
+Program: B.Tech AIML Student
+Institute: Sreenidhi Institute of Science and Technology
+
+
 PROJECT OVERVIEW
 
 This application helps teams organize work by creating projects, adding team members, assigning tasks, and monitoring task status from a dashboard.
@@ -162,7 +169,7 @@ npm start
 8. Generate a Railway domain and use it as the live URL.
 
 
-INTERVIEW EXPLANATION
+EXPLANATION
 
 This project demonstrates full-stack development, REST API design, authentication, validations, relationships between data entities, role-based authorization, deployment preparation, and Git/GitHub workflow.
 

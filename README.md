@@ -7,6 +7,12 @@ Team Task Manager is a full-stack web application for managing team projects, as
 - Live URL: Add your Railway deployment URL here
 - GitHub Repository: https://github.com/Khasim07tech/team-task-manager
 
+## Author
+
+- Name: Pinjari Khasim
+- Program: B.Tech AIML Student
+- Institute: Sreenidhi Institute of Science and Technology
+
 ## Project Overview
 
 This application helps teams organize work by creating projects, adding team members, assigning tasks, and monitoring task status from a dashboard. It includes authentication, project-level relationships, task assignment rules, role-based access control, and a responsive futuristic user interface.
