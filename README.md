@@ -1,58 +1,70 @@
 # Team Task Manager
 
-A full-stack web app for creating projects, assigning tasks, tracking status, and managing team access with Admin/Member roles.
+Team Task Manager is a full-stack web application for managing team projects, assigning tasks, tracking task progress, and controlling access with Admin and Member roles.
 
-## Features
+## Live Project
 
-- Signup and login with password hashing
-- First registered user becomes `Admin`; later users become `Member`
-- REST APIs for auth, users, projects, tasks, and dashboard metrics
-- Role-based access control:
-  - Admins can manage all projects, users, roles, and tasks
-  - Members can access projects they belong to
-  - Project owners can manage their own projects
-- Project membership relationships
-- Task assignment to project members only
-- Status tracking: `todo`, `in_progress`, `review`, `done`
-- Dashboard totals, status counts, overdue tasks, and personal open tasks
-- Persistent NoSQL-style JSON database
+- Live URL: Add your Railway deployment URL here
+- GitHub Repository: https://github.com/Khasim07tech/team-task-manager
+
+## Project Overview
+
+This application helps teams organize work by creating projects, adding team members, assigning tasks, and monitoring task status from a dashboard. It includes authentication, project-level relationships, task assignment rules, role-based access control, and a responsive futuristic user interface.
+
+## Key Features
+
+- User signup and login
+- Password hashing for secure authentication
+- Token-based protected API access
+- First registered user automatically becomes Admin
+- Later users become Members
+- Admin and Member role-based access control
+- Project creation and project member management
+- Task creation, assignment, status update, and deletion
+- Task assignment only to project members
+- Dashboard with project count, task count, completed tasks, status summary, overdue tasks, and personal open tasks
+- Responsive dark futuristic UI
+- Railway-ready deployment configuration
 
 ## Tech Stack
 
-- Node.js HTTP server
-- Vanilla JavaScript frontend
-- JSON document database stored at `data/db.json`
-- No external npm dependencies
+- Frontend: HTML, CSS, JavaScript
+- Backend: Node.js HTTP server
+- Database: File-backed JSON document storage
+- Authentication: Password hashing and signed tokens
+- Version Control: Git and GitHub
+- Deployment: Railway
 
-## Local Setup
+## Folder Structure
 
-```bash
-npm install
-npm start
+```text
+team-task-manager/
+  public/
+    index.html
+    styles.css
+    app.js
+  server.js
+  package.json
+  railway.json
+  README.md
 ```
 
-Open `http://localhost:3000`.
+## How It Works
 
-## Railway Deployment
+The backend in `server.js` serves both the REST APIs and the frontend files. API routes start with `/api/`, while normal browser requests serve the files from the `public/` folder.
 
-1. Push this project to GitHub.
-2. Create a new Railway project.
-3. Select **Deploy from GitHub repo**.
-4. Add this environment variable in Railway:
+Users authenticate through signup and login APIs. Passwords are hashed before storage. After login, the server returns a signed token. The frontend stores this token and sends it with future API requests.
 
-```bash
-JWT_SECRET=use-a-long-random-production-secret
-```
+Projects store an owner ID and a list of member IDs. Tasks store a project ID and assignee ID. The backend validates these relationships so a task can only be assigned to a user who belongs to the selected project.
 
-5. Railway will run:
+## Role-Based Access Control
 
-```bash
-npm start
-```
+- Admin can manage users, roles, projects, and tasks.
+- Member can access only projects where they are included as a member.
+- Project owner can manage their own project.
+- Task assignee can update task status.
 
-The app listens on `process.env.PORT`, which Railway provides automatically.
-
-## API Overview
+## Main API Routes
 
 ### Auth
 
@@ -83,7 +95,42 @@ The app listens on `process.env.PORT`, which Railway provides automatically.
 
 - `GET /api/dashboard`
 
-## Submission
+## Local Setup
 
-- Live URL: add your Railway URL here after deployment
-- GitHub repo: add your repository URL here
+```bash
+npm install
+npm start
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+## Railway Deployment
+
+1. Push the project to GitHub.
+2. Open Railway.
+3. Create a new project.
+4. Select "Deploy from GitHub repo".
+5. Choose this repository.
+6. Add this environment variable:
+
+```bash
+JWT_SECRET=use-a-long-random-secret
+```
+
+7. Railway will automatically run:
+
+```bash
+npm start
+```
+
+8. Generate a Railway domain and use it as the live URL.
+
+## Interview Explanation
+
+This project demonstrates full-stack development, REST API design, authentication, validations, relationships between data entities, role-based authorization, deployment preparation, and Git/GitHub workflow.
+
+In a production version, the file-backed JSON storage can be replaced with PostgreSQL or MongoDB on Railway while keeping the same API structure.

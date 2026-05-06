@@ -1,0 +1,178 @@
+TEAM TASK MANAGER - PROJECT EXPLANATION
+
+Project Summary
+---------------
+Team Task Manager is a full-stack web application where users can create projects, add team members, assign tasks, update task status, and track progress using a dashboard.
+
+It includes authentication, project management, task management, role-based access control, validations, relationships, GitHub version control, and Railway deployment configuration.
+
+
+What I Built
+------------
+I built a full-stack Team Task Manager using Node.js for the backend and HTML, CSS, and JavaScript for the frontend.
+
+The application allows users to:
+- Sign up and log in
+- Create projects
+- Add team members to projects
+- Create and assign tasks
+- Track task status
+- View dashboard statistics
+- Manage users based on Admin and Member roles
+
+
+Tech Stack
+----------
+Frontend:
+- HTML
+- CSS
+- JavaScript
+
+Backend:
+- Node.js HTTP server
+
+Database:
+- File-backed JSON document storage
+
+Deployment:
+- Railway
+
+Version Control:
+- Git
+- GitHub
+
+
+Main Features
+-------------
+1. Authentication
+Users can sign up and log in. Passwords are not stored directly. They are hashed before being saved.
+
+2. Role-Based Access Control
+The first user becomes Admin. Other users become Members.
+
+Admin can manage users, roles, projects, and tasks.
+Members can access only the projects they belong to.
+
+3. Project Management
+Users can create projects and add members. Each project stores an owner ID and a list of member IDs.
+
+4. Task Management
+Tasks belong to projects. Each task stores a project ID, assignee ID, status, due date, and creator ID.
+
+5. Validations
+The backend checks that task titles are valid, project names are valid, users exist, and assignees belong to the selected project.
+
+6. Dashboard
+The dashboard shows total projects, total tasks, overdue tasks, completed tasks, status counts, and open tasks assigned to the logged-in user.
+
+7. Futuristic UI
+The app has a dark dashboard-style interface with modern cards, buttons, status chips, and responsive layout.
+
+
+Important Code Explanation
+--------------------------
+The server is created in server.js:
+
+const server = http.createServer((req, res) => {
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  if (url.pathname.startsWith("/api/")) return handleApi(req, res, url);
+  return serveStatic(req, res, url);
+});
+
+This code separates API requests from frontend page requests.
+
+
+Password hashing:
+
+function hashPassword(password, salt = crypto.randomBytes(16).toString("hex")) {
+  const hash = crypto.scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${hash}`;
+}
+
+This protects user passwords by storing a hashed version instead of plain text.
+
+
+Role check:
+
+function isAdmin(user) {
+  return user.role === "Admin";
+}
+
+This checks whether the current user has Admin permissions.
+
+
+Project access check:
+
+function canAccessProject(user, project) {
+  return isAdmin(user) || project.memberIds.includes(user.id);
+}
+
+This allows Admins to access all projects and Members to access only their own projects.
+
+
+Task assignment validation:
+
+if (!project.memberIds.includes(assigneeId)) {
+  return fail(res, 400, "Assignee must be a project member.");
+}
+
+This ensures tasks cannot be assigned to users outside the project.
+
+
+Git Explanation
+---------------
+Git is used to track code changes.
+
+Important Git commands:
+
+git init
+Starts Git tracking in the project folder.
+
+git add .
+Stages files before committing.
+
+git commit -m "message"
+Saves a version of the project.
+
+git remote add origin <repo-url>
+Connects the local project to GitHub.
+
+git push -u origin main
+Uploads the code to GitHub.
+
+
+What I Did With Git
+-------------------
+I initialized a Git repository, committed the project files, connected the project to GitHub, pushed it to the main branch, made UI improvements, fixed task project selection, and pushed updates again.
+
+
+Railway Deployment Explanation
+------------------------------
+Railway is used to host the app online.
+
+The package.json file contains:
+
+"scripts": {
+  "start": "node server.js"
+}
+
+Railway runs npm start, which starts the Node.js server.
+
+The app uses process.env.PORT, so it works correctly on Railway:
+
+const PORT = process.env.PORT || 3000;
+
+Railway also needs this variable:
+
+JWT_SECRET=your-long-random-secret
+
+
+Interview Answer
+----------------
+I built a full-stack Team Task Manager with authentication, role-based access control, project management, task assignment, and dashboard tracking.
+
+The backend uses REST APIs in Node.js. The frontend is built with HTML, CSS, and JavaScript. I implemented data relationships between users, projects, and tasks. I also added validations so that tasks can only be assigned to members of the selected project.
+
+I used Git for version control, pushed the project to GitHub, and configured it for Railway deployment.
+
+In production, I would replace the file-backed JSON storage with PostgreSQL or MongoDB while keeping the same API structure.
